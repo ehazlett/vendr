@@ -1,4 +1,5 @@
 *.swp
 *.pyc
 *.nfs*
+*.db
 local_settings.py
