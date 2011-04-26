@@ -49,9 +49,10 @@ def download(request, file_id):
         wrapper = FileWrapper(file(fname))
         response = HttpResponse(wrapper, content_type='application/octet-stream')
         response['Content-Length'] = os.path.getsize(fname)
-        response['Content-Disposition'] = 'attachment; filename={0}'.format(repo_file.filename)
+        response['Content-Disposition'] = 'attachment; filename=\"{0}\"'.format(repo_file.filename)
         return response
     except:
-        import traceback
-        return HttpResponse(traceback.format_exc())
-        return HttpResponse('Unable to find file...')
+        vars = RequestContext(request, {
+        })
+        return render_to_response('unknown.html', vars)
+
