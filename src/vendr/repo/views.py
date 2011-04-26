@@ -34,10 +34,10 @@ def upload(request):
             repo_file.save()
             handle_upload(request.FILES['filename'], form.cleaned_data['uuid'])
         vars = RequestContext(request, {
-
+            'host': request.get_host(),
+            'link': reverse('repo.views.download', args=[form.cleaned_data['uuid']]),
         })
-        return HttpResponse('You can download the file via <a href=\"{0}\">{0}</a>'.format(\
-            reverse('repo.views.download', args=[form.cleaned_data['uuid']])))
+        return render_to_response('show_link.html', vars)
 
 def download(request, file_id):
     try:

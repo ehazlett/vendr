@@ -11,4 +11,4 @@ class RepoFile(models.Model):
         ordering = ['-date_created']
 
     def __unicode__(self):
-        return '{0} {1}'.format(self.date_created, self.uploaded_file)
+        return '{0} {1}'.format(self.date_created, self.filename)

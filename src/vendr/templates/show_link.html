@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block content %}
+<div>
+    <p>
+        {% trans "You can download your file using this link" %}
+    </p>
+    <p>
+        <a href="{{link}}" target="_blank">{{host}}{{link}}</a>
+    </p>
+    <div id="page-buttons">
+        <a href="/" class="button"><span>{% trans "Share another" %}</span></a>
+    </div>
+</div>
+{% endblock %}

@@ -9,8 +9,10 @@
 	<meta name="description" content="Simple easy file sharing" />
 
 	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/app.css" />
+    <link href='http://fonts.googleapis.com/css?family=Terminal+Dosis+Light' rel='stylesheet' type='text/css'>
 
     <script type="text/javascript" src="{{STATIC_URL}}js/app.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/jquery.js"></script>
 
     {% block extrahead %}{% endblock %}
 
@@ -18,7 +20,6 @@
 
 <body>
 <div id="header">
-    <span><a href="/"><span class="logo_text">Vendr</span></a></span>
     <div id="top_menu">
         <ul>
         </ul>
@@ -26,13 +27,14 @@
 </div>
 
 <div id="content">
+<div><span class="logo"><a href="/">Vendr</a></span><span class="logo-text">{% trans 'simple file sharing...' %}</span></div>
 {% block content %}
 
 {% endblock %}
 </div>
 
 <div id="footer">
-    <span id="copyright">&copy; 2011 <a href="http://www.lumentica.com" target="_blank">Lumentica</a></span>
+    <span><a href="http://github.com/ehazlett/vendr" target="_blank">Vendr</a></span>
 </div>
 
 <script type="text/javascript">

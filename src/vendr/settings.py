@@ -150,6 +150,9 @@ LOGGING = {
     }
 }
 
+import djcelery
+djcelery.setup_loader()
+
 try:
     from local_settings import *
 except ImportError:
