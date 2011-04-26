@@ -8,7 +8,9 @@ import os
 import uuid
 
 def handle_upload(f, uuid):
-    dest = open(os.path.join(os.path.join(settings.STATIC_ROOT, 'uploads'), uuid), 'wb+')
+    if not os.path.exists(settings.UPLOADS_DIR):
+        os.makedirs(settings.UPLOADS_DIR)
+    dest = open(os.path.join(settings.UPLOADS_DIR, uuid), 'wb+')
     for c in f.chunks():
         dest.write(c)
     dest.close()
@@ -24,5 +26,5 @@ def upload(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            handle_upload(request.FILES['upload_file'], form.cleaned_data['uuid'])
+            handle_upload(request.FILES['filename'], form.cleaned_data['uuid'])
     return HttpResponse('File: {0} uploaded...'.format(form.cleaned_data['uuid']))
