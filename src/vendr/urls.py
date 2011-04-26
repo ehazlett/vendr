@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     (r'^$', 'repo.views.index'),
     (r'upload/$', 'repo.views.upload'),
+    (r'get/([\w,\W,\-]+)/$', 'repo.views.download'),
 )
 
 if settings.DEBUG:

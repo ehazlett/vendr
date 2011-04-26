@@ -3,6 +3,8 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.conf import settings
+from django.core.servers.basehttp import FileWrapper
+from repo.models import RepoFile
 from repo.forms import UploadFileForm
 import os
 import uuid
@@ -26,5 +28,30 @@ def upload(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
+            repo_file = RepoFile()
+            repo_file.uuid = form.cleaned_data['uuid']
+            repo_file.filename = request.FILES['filename']
+            repo_file.save()
             handle_upload(request.FILES['filename'], form.cleaned_data['uuid'])
-    return HttpResponse('File: {0} uploaded...'.format(form.cleaned_data['uuid']))
+        vars = RequestContext(request, {
+
+        })
+        return HttpResponse('You can download the file via <a href=\"{0}\">{0}</a>'.format(\
+            reverse('repo.views.download', args=[form.cleaned_data['uuid']])))
+
+def download(request, file_id):
+    try:
+        repo_file = RepoFile.objects.get(uuid=file_id)
+        repo_file.download_count += 1
+        repo_file.save()
+        # use filewrapper to transfer large files faster/better
+        fname = os.path.join(settings.UPLOADS_DIR, file_id)
+        wrapper = FileWrapper(file(fname))
+        response = HttpResponse(wrapper, content_type='application/octet-stream')
+        response['Content-Length'] = os.path.getsize(fname)
+        response['Content-Disposition'] = 'attachment; filename={0}'.format(repo_file.filename)
+        return response
+    except:
+        import traceback
+        return HttpResponse(traceback.format_exc())
+        return HttpResponse('Unable to find file...')
