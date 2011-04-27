@@ -59,6 +59,7 @@ MEDIA_URL = '/files/'
 # Example: "/home/media/media.lawrence.com/static/"
 STATIC_ROOT = 'static'
 UPLOADS_DIR = os.path.join(STATIC_ROOT, 'uploads')
+MAX_FILE_AGE = 15 # max age for files (in minutes) -- after this they will be removed
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
