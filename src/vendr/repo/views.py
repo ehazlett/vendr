@@ -36,8 +36,11 @@ def upload(request):
         vars = RequestContext(request, {
             'host': request.get_host(),
             'link': reverse('repo.views.download', args=[form.cleaned_data['uuid']]),
+            'max_file_age': settings.MAX_FILE_AGE,
         })
         return render_to_response('show_link.html', vars)
+    else:
+        return HttpResponseRedirect('/')
 
 def download(request, file_id):
     try:

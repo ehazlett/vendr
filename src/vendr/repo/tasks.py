@@ -17,8 +17,10 @@ def cleanup():
         print('Removing {0} ({1})'.format(rf.uuid, rf.filename))
         deleted.append(rf.filename)
         rf_file = os.path.join(settings.UPLOADS_DIR, rf.uuid)
-        if os.path.exists(rf_file):
+        try:
             os.remove(rf_file)
+        except Exception, d:
+            deleted.append('Failed to remove {0}: {1}'.format(rf_file, d))
         # clear db entry
         rf.delete()
     if len(deleted) > 0:

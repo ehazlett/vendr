@@ -40,7 +40,7 @@ a.button:active span {
 } 
 #content {
     background-color: #fafafa;
-    min-height: 275px;
+    min-height: 325px;
     width: 75%;
     margin: 50px auto 0 auto;
     padding: 10px;
@@ -68,4 +68,7 @@ a.button:active span {
     width: 20%;
     margin: 15px auto 0 auto;
     text-align: center;
+}
+#links a, #links a:hover {
+    color: #588cb3;
 }
